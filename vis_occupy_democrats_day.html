@@ -82,7 +82,15 @@ var line = d3.svg.line()
     .x(function(d) { return x(d.Day); })
     .y(function(d) { return y(d.Amount); });
 
-d3.csv("occupy_democrats_day_reparsed.csv", type, function(error, data) {
+var democrat_day = "occupy_democrats_day_reparsed.csv";
+var democrat_week = "occupy_democrats_week_reparsed.csv";
+var republican_day = "republican_day_reparsed.csv";
+var republican_week = "republican_week_reparsed.csv";
+
+// CSV SOURCE OPTION
+var CSV_SRC_OPTION = democrat_day;
+
+d3.csv(CSV_SRC_OPTION, type, function(error, data) {
 
   var status = data.filter(function(d){
     return d.Type == "stat";
@@ -94,11 +102,24 @@ d3.csv("occupy_democrats_day_reparsed.csv", type, function(error, data) {
   });
   comment = comment.sort(sort_by_date);
 
-console.log(status[0]);
+  // GRAPH OPTIONS
+  var LINE_OPTION = [status,comment]; // the lines to display
+  var Y_DOMAIN_OPTION = comment; // the y domain scale
+  
+  var color_function = function(d) {
+    return colors(Math.random() * 50);
+  }
+
+  var second_color = function(d) {
+    colors(Math.random() * 50); // "Random"...
+    return colors(Math.random() * 50);
+  }
+
+  var COLOR_OPTION = color_function;
 
   // Compute domains
   x.domain([status[0].Day, status[status.length - 1].Day]);
-  y.domain([0, d3.max(comment, function(d) { return d.Amount; })]).nice();
+  y.domain([0, d3.max(Y_DOMAIN_OPTION, function(d) { return d.Amount; })]).nice();
 
   // Add an SVG element with dimensions and margins
   var svg = d3.select("svg")
@@ -126,13 +147,11 @@ console.log(status[0]);
 
   var colors = d3.scale.category10();
   svg.selectAll('.line')
-    .data([status,comment])
+    .data(LINE_OPTION)
     .enter()
       .append('path')
         .attr('class', 'line')
-        .style('stroke', function(d) {
-          return colors(Math.random() * 50);
-        })
+        .style('stroke', COLOR_OPTION)
         .attr('clip-path', 'url(#clip)')
         .attr('d', function(d) {
           return line(d);
