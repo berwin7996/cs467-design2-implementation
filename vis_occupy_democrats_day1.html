@@ -176,6 +176,17 @@
 
 <script>
 
+var events = [
+    {'name': 'IA Caucus', 'date': '02/01/2016'},
+    {'name': 'NH Primary', 'date': '02/09/2016'},
+    {'name': 'SC Primary', 'date': '02/20/2016'},
+    // {'name': 'Fox News GOP Debate', 'date': '01/28/2016'},
+    // {'name': 'ABC News GOP Debate', 'date': '02/06/2016'},
+    // {'name': 'CBS News GOP Debate', 'date': '02/13/2016'},
+    {'name': 'NBC Democratic Debate', 'date': '02/04/2016'},
+    {'name': 'PBS Democratic Debate', 'date': '02/11/2016'},
+]
+
 // Based on http://bl.ocks.org/markmarkoh/8700606
 
 // http://stackoverflow.com/questions/11252753/rotate-x-axis-text-in-d3
@@ -289,6 +300,27 @@ d3.csv("occupy_democrats_day_reparsed.csv", type, function(error, data) {
   .attr('width', 0);
   t.select('line.guide')
   .attr('transform', 'translate(' + width + ', 0)')
+
+  for (var i = 0; i < events.length; i++) {
+    console.log(events[i]['name']);
+    svg.append("line")
+    .attr("x1", x(parse(events[i]['date'])))
+    .attr("y1", 0)
+    .attr("x2", x(parse(events[i]['date'])))
+    .attr("y2", height)
+    .style("stroke-width", 0.5)
+    .style("stroke", "black")
+    .style("fill", "none")
+    .style("stroke-dasharray", ("3, 3"));
+
+    svg.append("text")
+    .attr("x", 5 + x(parse(events[i]['date'])))
+    .attr("y", 10+i*15)
+    .text(function(d) { return events[i]['name']; });
+  }
+
+  // add vertical bars for events
+
 
 });
 
