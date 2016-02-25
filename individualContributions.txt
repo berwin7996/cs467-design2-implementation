@@ -7,15 +7,14 @@ Berwin Xie:
 	-added annotations to the graphs
 
 Sheena Panthaplackel:
-
 	-Wrote script to parse retrieved Facebook data and put it in a format that could be fed into front-end
 	-Created dashboard for website
 	-Collaborated with others to fix specific issues that were happening in the front-end related to d3
 
 
 Daniel Hsu:
-
 	-Created visualizations using d3.js for the parsed data
+	-Added tooltip interactions to visualizations
 	-Collaborated with others to fix specific issues that were happening in the front-end related to d3
 
 Pranav Boopathy:
