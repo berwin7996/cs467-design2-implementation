@@ -18,3 +18,7 @@ Daniel Hsu:
 	-Collaborated with others to fix specific issues that were happening in the front-end related to d3
 
 Pranav Boopathy:
+	
+	-Created the tool-tip for all the graphs
+	-Updated and edited titles
+	-Fixed legend for a few graphs
