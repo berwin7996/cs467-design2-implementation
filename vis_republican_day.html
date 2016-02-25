@@ -42,6 +42,35 @@ path.area {
   margin-right: 100px;
   float: right;
 }
+
+.d3-tip {
+  line-height: 1;
+  font-weight: bold;
+  padding: 12px;
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  border-radius: 2px;
+}
+
+/* Creates a small triangle extender for the tooltip */
+.d3-tip:after {
+  box-sizing: border-box;
+  display: inline;
+  font-size: 10px;
+  width: 100%;
+  line-height: 1;
+  color: rgba(0, 0, 0, 0.8);
+  content: "\25BC";
+  position: absolute;
+  text-align: center;
+}
+
+/* Style northward tooltips differently */
+.d3-tip.n:after {
+  margin: -1px 0 0 0;
+  top: 100%;
+  left: 0;
+}
 </style>
 
 <body>
@@ -49,6 +78,8 @@ path.area {
 <svg></svg> <!--Line graph svg-->
 
 <script src="http://d3js.org/d3.v3.min.js"></script>
+<script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
+
 
 <script>
 
@@ -121,12 +152,23 @@ d3.csv(CSV_SRC_OPTION, type, function(error, data) {
   x.domain([status[0].Day, status[status.length - 1].Day]);
   y.domain([0, d3.max(Y_DOMAIN_OPTION, function(d) { return d.Amount; })]).nice();
 
+  //Tool tip
+  var tip = d3.tip()
+  .attr('class', 'd3-tip')
+  .offset([-10, 0])
+  .html(function(d) {
+    return "<strong>Frequency:</strong> <span style='color:red'>" + d.Amount + "</span>";
+  })
+
   // Add an SVG element with dimensions and margins
   var svg = d3.select("svg")
       .attr("width", width + margin.left + margin.right)
       .attr("height", height + margin.top + margin.bottom)
     .append("g")
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+
+  // Testing
+  svg.call(tip);
 
   // Add the x-axis.
   svg.append("g")
@@ -153,9 +195,12 @@ d3.csv(CSV_SRC_OPTION, type, function(error, data) {
         .attr('class', 'line')
         .style('stroke', COLOR_OPTION)
         .attr('clip-path', 'url(#clip)')
+        .on('mouseover', tip.show)
+        .on('mouseout', tip.hide))
         .attr('d', function(d) {
           return line(d);
-        })
+        }
+        )
 
   // Add 'curtain' rectangle to hide entire graph
   // We translate this rectangle across the graph
