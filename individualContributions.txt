@@ -1,7 +1,10 @@
 Individual Contributions
 
 Berwin Xie:
-
+	-scraped Facebook Pages using Graph API for data
+	-used bootstrap templates to build each page
+	-hosted the site
+	-added annotations to the graphs
 
 Sheena Panthaplackel:
 
