@@ -15,5 +15,7 @@ Sheena Panthaplackel:
 
 Daniel Hsu:
 
+	-Created visualizations using d3.js for the parsed data
+	-Collaborated with others to fix specific issues that were happening in the front-end related to d3
 
 Pranav Boopathy:
